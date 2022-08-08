@@ -11,6 +11,7 @@ Detalhamento das etapas realizadas:
 <ul>
   <li>realizado implementação da parte JS primeiro;</li>
   <li>Geração da parte de Front;</li>
+  <li>Adicionado os botões e funções para save/random/reset;</li>
 </ul>
 
 Propostas para implementações futuras:

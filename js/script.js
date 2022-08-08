@@ -20,6 +20,8 @@ function newGame() {
 
 function render() {
   renderBoard();
+  renderButtons();
+  renderSavedGames();
 }
 
 function renderBoard() {
@@ -32,7 +34,7 @@ function renderBoard() {
     var liNumber = document.createElement('li');
     liNumber.textContent = state.board[i];
 
-    liNumber.addEventListener('click', handleNumberClick);
+    liNumber.addEventListener('click', handleNumberClick); // add o evento de click
 
     ulNumbers.appendChild(liNumber);
   }
@@ -52,6 +54,50 @@ function handleNumberClick(event) {
 
   console.log(state.currentGame);
 }
+
+function renderButtons() {
+  var divButtons = document.querySelector('#megasena-buttons');
+  divButtons.innerHTML = '';
+
+  var buttonNewGame = createNewGameButton();
+
+  var buttonRandomGame = createRandomGameButton();
+
+  var buttonSaveGame = createSaveGameButton();
+
+  divButtons.appendChild(buttonNewGame);
+  divButtons.appendChild(buttonRandomGame);
+  divButtons.appendChild(buttonSaveGame);
+}
+
+function createRandomGameButton() {
+  var button = document.createElement('button');
+  button.textContent = 'Jogo Aleatório';
+
+  button.addEventListener('click', randomGame);
+
+  return button;
+}
+
+function createSaveGameButton() {
+  var button = document.createElement('button');
+  button.textContent = 'Salvar Jogo';
+
+  button.addEventListener('click', saveGame);
+
+  return button;
+}
+
+function createNewGameButton() {
+  var button = document.createElement('button');
+  button.textContent = 'Novo Jogo';
+
+  button.addEventListener('click', newGame);
+
+  return button;
+}
+
+function renderSavedGames() {}
 
 function addNumberToGame(numberToAdd) {
   if (numberToAdd < 1 || numberToAdd > 60) {
@@ -108,6 +154,7 @@ function saveGame() {
     return;
   }
   state.savedGames.push(state.currentGame);
+  newGame();
 }
 
 function isGameComplete() {
@@ -116,6 +163,17 @@ function isGameComplete() {
 
 function resetGame() {
   state.currentGame = [];
+}
+
+function randomGame() {
+  resetGame();
+
+  while (!isGameComplete()) {
+    var randomNumber = Math.ceil(Math.random() * 60);
+    addNumberToGame(randomNumber);
+  }
+
+  console.log(state.currentGame);
 }
 
 start();
