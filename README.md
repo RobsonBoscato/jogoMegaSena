@@ -13,6 +13,7 @@ Detalhamento das etapas realizadas:
   <li>Geração da parte de Front;</li>
   <li>Adicionado os botões e funções para save/random/reset;</li>
   <li>Feito a estilização do front;</li>
+  <li>Adicionado o salvamento em Cache via LocalStorage;</li>
 </ul>
 
 Propostas para implementações futuras:
