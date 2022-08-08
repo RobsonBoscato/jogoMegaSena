@@ -29,12 +29,18 @@ function renderBoard() {
   divBoard.innerHTML = '';
 
   var ulNumbers = document.createElement('ul');
+  ulNumbers.classList.add('numbers');
 
   for (let i = 0; i < state.board.length; i++) {
     var liNumber = document.createElement('li');
     liNumber.textContent = state.board[i];
+    liNumber.classList.add('number');
 
     liNumber.addEventListener('click', handleNumberClick); // add o evento de click
+
+    if (isNumberInGame(state.board[i])) {
+      liNumber.classList.add('selected-number');
+    }
 
     ulNumbers.appendChild(liNumber);
   }
@@ -52,7 +58,7 @@ function handleNumberClick(event) {
     addNumberToGame(value);
   }
 
-  console.log(state.currentGame);
+  render();
 }
 
 function renderButtons() {
@@ -82,6 +88,7 @@ function createRandomGameButton() {
 function createSaveGameButton() {
   var button = document.createElement('button');
   button.textContent = 'Salvar Jogo';
+  button.disabled = !isGameComplete();
 
   button.addEventListener('click', saveGame);
 
@@ -97,7 +104,24 @@ function createNewGameButton() {
   return button;
 }
 
-function renderSavedGames() {}
+function renderSavedGames() {
+  var divSavedGames = document.querySelector('#megasena-saved-games');
+  divSavedGames.innerHTML = '';
+
+  if (state.savedGames.length === 0) {
+    divSavedGames.innerHTML = '<p>Nenhum jogo salvo </p>';
+  } else {
+    var ulSavedGames = document.createElement('ul');
+
+    for (let i = 0; i < state.savedGames.length; i++) {
+      var liGame = document.createElement('li');
+      liGame.textContent = state.savedGames[i].join(', ');
+
+      ulSavedGames.appendChild(liGame);
+    }
+    divSavedGames.appendChild(ulSavedGames);
+  }
+}
 
 function addNumberToGame(numberToAdd) {
   if (numberToAdd < 1 || numberToAdd > 60) {
@@ -173,7 +197,7 @@ function randomGame() {
     addNumberToGame(randomNumber);
   }
 
-  console.log(state.currentGame);
+  render();
 }
 
 start();
